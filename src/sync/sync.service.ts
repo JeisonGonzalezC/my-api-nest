@@ -9,8 +9,8 @@ export class SyncService {
   constructor(private contentfulService: ContentfulService) {}
 
   @Cron('0 * * * *') // every hour
-  async handleCron() {
-    this.logger.log('Iniciando sincronización horaria con Contentful...');
+  async handleProductsCron() {
+    this.logger.log('Init contentful...');
 
     try {
       const products = await this.contentfulService.getProducts();

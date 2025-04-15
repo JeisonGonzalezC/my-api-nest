@@ -20,15 +20,20 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky install",
     "lint:check": "eslint .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "typeorm": "typeorm",
+    "migration:run": "npm run build && typeorm migration:run -d dist/data-source.js",
+    "migration:create": "typeorm migration:create src/migrations/CreateProductsTable -d src/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/schedule": "^5.0.1",
+    "@nestjs/typeorm": "^11.0.0",
     "contentful": "^11.5.13",
     "dotenv": "^16.5.0",
+    "pg": "^8.14.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -61,6 +66,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.22",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },
