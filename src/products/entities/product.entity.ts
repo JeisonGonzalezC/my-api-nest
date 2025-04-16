@@ -1,9 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity('products')
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ name: 'contentful_id', unique: true })
+  contentfulId: string;
 
   @Column({ type: 'varchar', length: 100 })
   sku: string;
@@ -34,4 +37,7 @@ export class Product {
 
   @Column({ type: 'boolean', default: false })
   deleted: boolean;
+
+  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 }

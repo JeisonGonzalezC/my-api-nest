@@ -9,10 +9,16 @@ export class ContentfulService {
     environment: process.env.CONTENTFUL_ENVIRONMENT || 'master',
   });
 
-  async getProducts(): Promise<EntryCollection<EntrySkeletonType, undefined, string>> {
+  async getProducts(
+    skip: number,
+    limit: number,
+  ): Promise<EntryCollection<EntrySkeletonType, undefined, string>> {
     try {
       const response = await this.client.getEntries({
         content_type: process.env.CONTENTFUL_CONTENT_TYPE || 'product',
+        limit,
+        skip,
+        order: ['sys.createdAt'],
       });
       return response;
     } catch (error) {

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { SyncService } from './sync/sync.service';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './products/entities/product.entity';
@@ -22,6 +21,6 @@ dotenv.config();
     ScheduleModule.forRoot(),
   ],
   controllers: [],
-  providers: [SyncService],
+  providers: [],
 })
 export class AppModule {}
