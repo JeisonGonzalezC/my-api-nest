@@ -34,15 +34,17 @@ export class ProductService {
     };
 
     try {
-      const total = await this.productRepository.count({
-        where,
-      });
+      const [products, total] = await Promise.all([
+        this.productRepository.find({
+          where,
+          skip: (page - 1) * LIMIT_BY_PAGE_PRODUCTS,
+          take: LIMIT_BY_PAGE_PRODUCTS,
+        }),
 
-      const products = await this.productRepository.find({
-        where,
-        skip: (page - 1) * LIMIT_BY_PAGE_PRODUCTS,
-        take: LIMIT_BY_PAGE_PRODUCTS,
-      });
+        this.productRepository.count({
+          where,
+        }),
+      ]);
 
       const items = products.map((product) => {
         return {
