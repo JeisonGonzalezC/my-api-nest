@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ReportService } from './report.service';
 import { ReportFilterDto } from './dto/report-filter.dto';
 import {
