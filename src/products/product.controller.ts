@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Query } from '@nestjs/common';
-import { ProductService } from '../services/product.service';
-import { IProductResponse } from '../interfaces';
-import { ProductFilterDto } from '../dto/product-filter.dto';
+import { ProductService } from './product.service';
+import { IProductResponse } from './interfaces';
+import { ProductFilterDto } from './dto/product-filter.dto';
 
 @Controller('products')
 export class ProductController {

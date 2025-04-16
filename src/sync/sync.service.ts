@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntryCollection, EntrySkeletonType } from 'contentful';
+import { ContentfulService } from 'src/contentful/contentful.service';
 import { Product } from 'src/products/entities/product.entity';
-import { ContentfulService } from 'src/products/services/contentful.service';
 import { Repository } from 'typeorm';
 
 const LIMIT_PRODUCTS_API_CONTENTFUL = 20;

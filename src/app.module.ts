@@ -3,6 +3,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ProductsModule } from './products/products.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './products/entities/product.entity';
+import { ReportModule } from './report/report.module';
+import { ContentfulModule } from './contentful/contentful.module';
+import { SyncModule } from './sync/sync.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,8 +20,11 @@ dotenv.config();
       database: process.env.DB_DATABASE!,
       entities: [Product],
     }),
-    ProductsModule,
     ScheduleModule.forRoot(),
+    SyncModule,
+    ContentfulModule,
+    ProductsModule,
+    ReportModule,
   ],
   controllers: [],
   providers: [],

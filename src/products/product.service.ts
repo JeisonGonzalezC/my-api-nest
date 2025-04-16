@@ -1,8 +1,8 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { Product } from '../entities/product.entity';
 import { Between, FindOperator, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
-import { IProductFilter, IProductResponse } from '../interfaces';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from './entities/product.entity';
+import { IProductFilter, IProductResponse } from './interfaces';
 
 const LIMIT_BY_PAGE_PRODUCTS = 5;
 
