@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { Between, FindOperator, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { IProductFilter, IProductResponse } from '../interfaces';
@@ -15,11 +15,6 @@ export class ProductService {
 
   async getProducts(args: IProductFilter = {}): Promise<IProductResponse> {
     const { page = 1, name, category, minPrice, maxPrice } = args;
-
-    // Validate page number
-    if (page < 1) {
-      throw new Error('Page number must be greater than 0');
-    }
 
     // Validate price range
     let priceCondition: FindOperator<number> | undefined = undefined;
@@ -38,45 +33,59 @@ export class ProductService {
       ...(priceCondition && { price: priceCondition }),
     };
 
-    const total = await this.productRepository.count({
-      where,
-    });
+    try {
+      const total = await this.productRepository.count({
+        where,
+      });
 
-    const products = await this.productRepository.find({
-      where,
-      skip: (page - 1) * LIMIT_BY_PAGE_PRODUCTS,
-      take: LIMIT_BY_PAGE_PRODUCTS,
-    });
+      const products = await this.productRepository.find({
+        where,
+        skip: (page - 1) * LIMIT_BY_PAGE_PRODUCTS,
+        take: LIMIT_BY_PAGE_PRODUCTS,
+      });
 
-    const items = products.map((product) => {
+      const items = products.map((product) => {
+        return {
+          id: product.id,
+          contentfulId: product.contentfulId,
+          sku: product.sku,
+          name: product.name,
+          brand: product.brand,
+          category: product.category,
+          price: product.price,
+          stock: product.stock,
+        };
+      });
+
       return {
-        id: product.id,
-        contentfulId: product.contentfulId,
-        sku: product.sku,
-        name: product.name,
-        brand: product.brand,
-        category: product.category,
-        price: product.price,
-        stock: product.stock,
+        page,
+        limit: LIMIT_BY_PAGE_PRODUCTS,
+        total,
+        totalPages: Math.ceil(total / LIMIT_BY_PAGE_PRODUCTS),
+        count: items.length,
+        products: items,
       };
-    });
-
-    return {
-      page,
-      limit: LIMIT_BY_PAGE_PRODUCTS,
-      total,
-      totalPages: Math.ceil(total / LIMIT_BY_PAGE_PRODUCTS),
-      count: items.length,
-      products: items,
-    };
+    } catch (error) {
+      throw new InternalServerErrorException({
+        message: 'Failed to fetch products',
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   }
 
   async deleteProduct(id: string): Promise<void> {
-    const product = await this.productRepository.findOne({ where: { id } });
+    const product = await this.productRepository.findOne({ where: { id, deleted: false } });
     if (!product) {
-      throw new Error('Product not found');
+      throw new NotFoundException('Product not found');
     }
 
-    await this.productRepository.update(id, { deleted: true });
+    try {
+      await this.productRepository.update(id, { deleted: true });
+    } catch (error) {
+      throw new InternalServerErrorException({
+        message: 'Failed to delete product',
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   }
 }

@@ -1,5 +1,5 @@
 // dto/product-filter.dto.ts
-import { IsOptional, IsNumber, IsString } from 'class-validator';
+import { IsOptional, IsNumber, IsString, IsPositive } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ProductFilterDto {
@@ -14,15 +14,18 @@ export class ProductFilterDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @IsPositive()
   minPrice?: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @IsPositive()
   maxPrice?: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
+  @IsPositive()
   page?: number;
 }
