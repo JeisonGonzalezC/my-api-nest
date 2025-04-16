@@ -22,5 +22,6 @@ export interface IProductResponse {
   limit: number;
   total: number;
   totalPages: number;
+  count: number;
   products: IProductItem[];
 }

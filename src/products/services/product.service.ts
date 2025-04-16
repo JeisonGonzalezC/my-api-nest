@@ -66,7 +66,17 @@ export class ProductService {
       limit: LIMIT_BY_PAGE_PRODUCTS,
       total,
       totalPages: Math.ceil(total / LIMIT_BY_PAGE_PRODUCTS),
+      count: items.length,
       products: items,
     };
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    await this.productRepository.update(id, { deleted: true });
   }
 }
