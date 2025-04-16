@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ReportService } from './report.service';
 import { ReportFilterDto } from './dto/report-filter.dto';
 import {
@@ -6,7 +6,9 @@ import {
   IReportDeletedProductsResponse,
   IReportInRangeResponse,
 } from './interfaces';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('report')
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
