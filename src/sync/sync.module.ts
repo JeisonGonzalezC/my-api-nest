@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { SyncService } from './sync.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from 'src/products/entities/product.entity';
-import { ContentfulModule } from 'src/contentful/contentful.module';
+import { Product } from '../products/entities/product.entity';
+import { ContentfulModule } from '../contentful/contentful.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product]), ContentfulModule],

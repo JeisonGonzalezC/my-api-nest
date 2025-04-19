@@ -1,5 +1,4 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Product } from 'src/products/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import {
@@ -8,6 +7,7 @@ import {
   IReportInRangeResponse,
   IReportRange,
 } from './interfaces';
+import { Product } from '../products/entities/product.entity';
 
 @Injectable()
 export class ReportService {

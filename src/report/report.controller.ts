@@ -6,7 +6,7 @@ import {
   IReportDeletedProductsResponse,
   IReportInRangeResponse,
 } from './interfaces';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('report')
