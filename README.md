@@ -78,12 +78,17 @@ Create a `.env` file at the root of the project:
 ```env
 DB_HOST=postgres-container
 DB_PORT=5432
-DB_USERNAME=jgonzalezc
-DB_PASSWORD=password
+DB_USERNAME=your_user_name
+DB_PASSWORD=your_password
 DB_DATABASE=product_api
 CONTENTFUL_SPACE_ID=your_space_id
 CONTENTFUL_ACCESS_TOKEN=your_access_token
+CONTENTFUL_ENVIRONMENT=master
+CONTENTFUL_CONTENT_TYPE=product
 JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=1h
+AUTH_USER=your_auth_user
+AUTH_PASSWORD=your_auth_password
 ```
 
 ---
