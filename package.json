@@ -11,7 +11,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -22,8 +22,8 @@
     "lint:check": "eslint .",
     "format:check": "prettier --check .",
     "typeorm": "typeorm",
-    "migration:run": "npm run build && typeorm migration:run -d dist/data-source.js",
-    "migration:create": "typeorm migration:create src/migrations/CreateProductsTable -d src/data-source.ts"
+    "migration:run": "npm run build && typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/data-source.ts src/migrations/NombreMigracion"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

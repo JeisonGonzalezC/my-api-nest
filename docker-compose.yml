@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    restart: always
+    environment:
+      POSTGRES_USER: jgonzalezc
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: product_api
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+  product-api:
+    image: product-api
+    container_name: product-api-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file: .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    command: /bin/sh -c "npm run migration:run && npm run start:prod"
+
+networks:
+  app-network:
+    driver: bridge
