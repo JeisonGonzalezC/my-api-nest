@@ -7,7 +7,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  login(@Body() args: AuthLoginDto): { accesToken: string } {
+  login(@Body() args: AuthLoginDto): { accessToken: string } {
     this.authService.validateUser(args.username, args.password);
     return this.authService.login(args.username);
   }

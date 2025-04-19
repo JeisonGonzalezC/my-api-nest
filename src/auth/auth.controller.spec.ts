@@ -14,8 +14,8 @@ describe('AuthController', () => {
         {
           provide: AuthService,
           useValue: {
-            validateUser: jest.fn(),
-            login: jest.fn(),
+            validateUser: jest.fn().mockImplementation(() => true),
+            login: jest.fn().mockImplementation(() => ({ accessToken: 'fake-token' })),
           },
         },
       ],
@@ -28,22 +28,18 @@ describe('AuthController', () => {
   describe('login', () => {
     it('should validate user and return access token', () => {
       const dto = { username: 'testuser', password: 'testpass' };
-      const token = { accesToken: 'fake-token' };
-
-      (authService.validateUser as jest.Mock).mockReturnValue(true);
-      (authService.login as jest.Mock).mockReturnValue(token);
 
       const result = authController.login(dto);
 
       expect(authService.validateUser).toHaveBeenCalledWith(dto.username, dto.password);
       expect(authService.login).toHaveBeenCalledWith(dto.username);
-      expect(result).toEqual(token);
+      expect(result).toEqual({ accessToken: 'fake-token' });
     });
 
     it('should throw if validation fails', () => {
       const dto = { username: 'baduser', password: 'badpass' };
 
-      (authService.validateUser as jest.Mock).mockImplementation(() => {
+      (authService.validateUser as jest.Mock).mockImplementationOnce(() => {
         throw new UnauthorizedException('Invalid credentials');
       });
 

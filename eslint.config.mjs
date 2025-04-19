@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/node_modules/**'],
+    ignores: ['**/dist/**', '**/node_modules/**', '**/*.spec.ts', '**/*.test.ts'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -15,13 +15,16 @@ export default tseslint.config(
       prettier: prettierPlugin,
     },
     rules: {
-      'prettier/prettier': ['error', {
-        singleQuote: true,
-        trailingComma: 'all',
-        printWidth: 100,
-        tabWidth: 2,
-        semi: true
-      }],
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+          trailingComma: 'all',
+          printWidth: 100,
+          tabWidth: 2,
+          semi: true,
+        },
+      ],
     },
   },
   {
@@ -41,5 +44,5 @@ export default tseslint.config(
       '@typescript-eslint/no-floating-promises': 'error',
       'no-console': 'warn',
     },
-  }
+  },
 );

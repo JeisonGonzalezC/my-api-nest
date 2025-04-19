@@ -36,7 +36,7 @@ describe('AuthService', () => {
       const result = authService.login('testuser');
 
       expect(spySign).toHaveBeenCalledWith(payload);
-      expect(result).toEqual({ accesToken: 'fake-token' });
+      expect(result).toEqual({ accessToken: 'fake-token' });
     });
   });
 });

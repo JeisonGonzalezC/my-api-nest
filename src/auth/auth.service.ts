@@ -16,11 +16,11 @@ export class AuthService {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  login(user: string): { accesToken: string } {
+  login(user: string): { accessToken: string } {
     const payload = { username: user };
-    const accesToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload);
     return {
-      accesToken,
+      accessToken,
     };
   }
 }
